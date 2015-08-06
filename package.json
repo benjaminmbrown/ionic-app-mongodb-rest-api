@@ -1,0 +1,25 @@
+{
+  "name": "ionic-app-mongodb-rest-api",
+  "version": "1.0.0",
+  "description": "e2e ionic hybrid mobile app with REST api . App is a simple \"Bucket List\" but one could modify it to do more.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjaminmbrown/ionic-app-mongodb-rest-api.git"
+  },
+  "author": "Benjamin M. Brown <benjaminbb@gmail.com> (http://twitter.com/benjaminmbrown)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benjaminmbrown/ionic-app-mongodb-rest-api/issues"
+  },
+  "homepage": "https://github.com/benjaminmbrown/ionic-app-mongodb-rest-api#readme",
+  "dependencies": {
+    "bcrypt": "^0.8.4",
+    "mongojs": "^1.2.1",
+    "morgan": "^1.6.1",
+    "restify": "^3.0.3"
+  }
+}
