@@ -6,6 +6,7 @@ var db = mongojs('bucketlist', ['appUsers', 'bucketLists']);
 var server = restify.createServer();
 
 var manageUsers = require('../auth/manageUser')(server,db);
+var manageLists = require('../list/mangeList')(server,db);
 
 //restify middleware
 server.use(restify.acceptParser(server.acceptable));

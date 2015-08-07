@@ -7,7 +7,7 @@ module.exports = function(server,db){
 
 	server.post('/api/v1/bucketList/auth/register', function(req,res,next){
 		var user = req.params;
-
+a
 		pwdMgr.cryptPassword(user.password,function(err,hash){
 			user.password = hash;
 			console.log('n', hash);
@@ -34,7 +34,7 @@ module.exports = function(server,db){
 			})
 		})
 		return next();
-	}
+	});
 
 	server.post('/api/v1/bucketList/auth/login', function(req,res,next){
 		var user = req.params;
@@ -61,3 +61,4 @@ module.exports = function(server,db){
 		});
 		return next();
 	})
+}
