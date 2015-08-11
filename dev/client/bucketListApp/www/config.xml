@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.ionicframework.bucketlistapp273130" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>My Bucket List</name>
+  <description>
+       Bucket list app with cordova, ionic, mongodb, and angular js!.
+    </description>
+  <author email="benjaminbb@gmail.com" href="http://twitter.com/benjaminmbrown">
+      Benjamin M. Brown
+    </author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="fullscreen" value = "true" />
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="phonegap-version" vlaue ="3.3.0"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
+</widget>
