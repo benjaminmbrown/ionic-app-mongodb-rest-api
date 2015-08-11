@@ -1,0 +1,14 @@
+
+  Usage: node-gyp <command> [options]
+
+  where <command> is one of:
+    - build - Invokes `msbuild` and builds the module
+    - clean - Removes any generated build files and the "out" dir
+    - configure - Generates MSVC project files for the current module
+    - rebuild - Runs "clean", "configure" and "build" all at once
+    - install - Install node development files for the specified node version.
+    - list - Prints a listing of the currently installed node development files
+    - remove - Removes the node development files for the specified version
+
+node-gyp@1.0.2  C:\Users\Benjamin\AppData\Roaming\npm\node_modules\node-gyp
+node@0.12.7
