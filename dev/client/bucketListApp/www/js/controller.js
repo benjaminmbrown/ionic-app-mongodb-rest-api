@@ -71,10 +71,168 @@ angular.module('bucketList.controllers', [])
 				}
 				else{
 					$rootScope.notify("Something went wrong.. try again. Sorry");		
-				}
-				
+				}	
 			});
+		}
+	})
+
+	.controller('myListCtrl', function($rootScope,$scope,API,$timeout, $ionicModal, $window){
+		
+		$rootScope.on('fetchAll', function(){
+			API.getAll($rootScope.getToken())
+				.success(function(data,status,headers,config){
+					$scope.list = [];
+					for (var i = 0; i< data.length; i++){
+						if(data[i].isComplete ==false){
+							$scope.list.push(data[i]);
+						}
+					};
+
+					if($scope.list.length==0){
+						$scope.noData =true;
+					}
+					else{
+						$scope.noData = false;
+					}
+
+					$ionicModal.fromTemplateUrl('templates/newItem.html',function(modal){
+						$scope.newTemplate = modal;
+					});
+
+					$scope.newTask = function(){
+						$scope.newTemplate.show();
+					}
+					$rootScope.hide();
+				})
+				.error(function(data, status, headers, config){
+					$rootScope.hide();
+					$rootScope.notify("Something went wrong. Please try again");
+
+				});
+		});
+		
+		$rootScope.$broadcast('fetchAll');
+
+		$scope.markCompleted = function(id){
+			$rootScope.show("Please wait, updating list");
+
+			API.putItem(id,{
+				isCompleted: true
+			}, $rootScope.getToken())
+				.success(function(data,status,headers,conifg){
+					$rootScope.hide();
+					$rootScope.doRefresh(1);
+				})
+				.error(function(data,status,headers,config){
+					$rootScope.hide();
+					$rootScope.notify("Something went wrong. Please try again");
+				})
+		};
+
+		$scope.deleteItem = function(id){
+			$rootScope.show("Wait, deleting item from list");
+
+			API.deleteItem(id, $rootScope.getToken())
+				.success(function(data,status,headers,conifg){
+					$rootScope.hide();
+					$rootScope.doRefresh(1);
+				})
+				.error(function(data,status,headers,config){
+					$rootScope.hide();
+					$rootScope.notify("Something went wrong. Please try again");
+				})
 
 		}
-
 	})
+
+	.controller('completedCtrl', function($rootScope,$scope,API, $window){
+
+		$rootScope.on('fetchCompleted', function(){
+			API.getAll($rootScope.getToken())
+				.success(function(data,status,headers,config){
+					$scope.list = [];
+					for (var i = 0; i< data.length; i++){
+						if(data[i].isCompleted == true){
+							$scope.list.push(data[i]);
+						}
+					};
+
+					if(data.length > 0 && $scope.list.length ==0){
+						$scope.incomplete = true
+					}
+					else{
+						$scope.incomplete = false;
+					}
+
+					if(data.length==0){
+						$scope.noData =true;
+					}
+					else{
+						$scope.noData = false;
+					}
+				})
+				.error(function(data, status, headers, config){
+					$rootScope.notify("Something went wrong. Please try again");
+				});
+		});
+
+		$rootScope.$broadcast('fetchCompleted');
+
+		$scope.deleteItem = function(id){
+			$rootScope.show("Please wait. Deleting from list");
+
+		API.deleteItem(id,$rootScope.getToken())
+			.success(function(data){
+				
+				$rootScope.hide();
+				$rootScope.doRefresh(2);
+				
+			}).error(function(error){
+				$rootScope.hide();
+				$rootScope.notify("Something went wrong. Please try again");
+			});
+		}
+	})
+
+	.controller('newCtrl', function($rootScope,$scope,API, $window){
+		$scope.data = {
+			item :''
+		}
+
+		$scope.close = function(){
+			$scope.modal.hide();
+		}
+
+		$scope.createNew = function(){
+			var item = this.data.item;
+
+			if(!item) return;
+
+			$scope.modal.hide();
+			$rootScope.show();
+
+			$rootScope.show("Wait a second... creating new item");
+
+			var form = {
+				item : item,
+				isCompleted : false;
+				user : $rootScope.getToken(),
+				create : new Date.now(),
+				updated : new Date.now()
+			}
+
+			API.saveItem(form, form.user)
+				.success(function(data){
+					$rootScope.hide();
+					$rootScope.doRefresh(1);
+				}).error(function(error){
+					$rootScope.hide();
+					$rootScope.notify("Something went wrong. Please try again");
+				});
+		};
+	})
+
+	
+
+
+
